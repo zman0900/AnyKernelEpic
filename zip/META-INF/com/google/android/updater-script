@@ -1,0 +1,39 @@
+assert(getprop("ro.product.device") == "epic" || getprop("ro.build.product") == "epic" || 
+       getprop("ro.product.device") == "epicmtd" || getprop("ro.build.product") == "epicmtd" || 
+       getprop("ro.product.device") == "SPH-D700" || getprop("ro.build.product") == "SPH-D700");
+show_progress(0.15, 5);
+
+ui_print("Extracting tools");
+package_extract_file("busybox", "/tmp/busybox");
+set_perm(0, 0, 0777, "/tmp/busybox");
+package_extract_file("flash_image", "/tmp/flash_image");
+set_perm(0, 0, 0777, "/tmp/flash_image");
+package_extract_file("erase_image", "/tmp/erase_image");
+set_perm(0, 0, 0777, "/tmp/erase_image");
+package_extract_file("dump_image", "/tmp/dump_image");
+set_perm(0, 0, 0777, "/tmp/dump_image");
+package_extract_file("bml_over_mtd", "/tmp/bml_over_mtd");
+set_perm(0, 0, 0777, "/tmp/bml_over_mtd");
+package_extract_file("bml_over_mtd.sh", "/tmp/bml_over_mtd.sh");
+set_perm(0, 0, 0777, "/tmp/bml_over_mtd.sh");
+package_extract_file("replace_kernel", "/tmp/replace_kernel");
+set_perm(0, 0, 0777, "/tmp/replace_kernel");
+package_extract_file("run.sh", "/tmp/run.sh");
+set_perm(0, 0, 0777, "/tmp/run.sh");
+package_extract_file("zImage", "/tmp/zImage");
+show_progress(0.500000, 0);
+
+ui_print("Replacing kernel");
+assert(run_program("/tmp/run.sh"));
+show_progress(0.150000, 5);
+
+ui_print("Installing modules");
+mount("yaffs2", "MTD", "system", "/system");
+package_extract_dir("system", "/system");
+show_progress(0.200000, 10);
+
+ui_print("Setting permissions");
+set_perm_recursive(0, 0, 0755, 0644, "/system/lib/modules");
+ui_print("Great Success");
+show_progress(0.100000, 0);
+unmount("/system");
