@@ -10,4 +10,4 @@ $TOOLCHAIN/$TOOLCHAIN_PREFIX'strip' -s zip/replace_kernel
 
 cd zip
 zip -r ../$KERNEL_NAME.zip ./*
-rm replace_kernel
+
