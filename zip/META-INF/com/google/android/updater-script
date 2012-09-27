@@ -10,17 +10,14 @@ package_extract_file("flash_image", "/tmp/flash_image");
 set_perm(0, 0, 0777, "/tmp/flash_image");
 package_extract_file("erase_image", "/tmp/erase_image");
 set_perm(0, 0, 0777, "/tmp/erase_image");
-package_extract_file("dump_image", "/tmp/dump_image");
-set_perm(0, 0, 0777, "/tmp/dump_image");
 package_extract_file("bml_over_mtd", "/tmp/bml_over_mtd");
 set_perm(0, 0, 0777, "/tmp/bml_over_mtd");
-package_extract_file("bml_over_mtd.sh", "/tmp/bml_over_mtd.sh");
-set_perm(0, 0, 0777, "/tmp/bml_over_mtd.sh");
 package_extract_file("replace_kernel", "/tmp/replace_kernel");
 set_perm(0, 0, 0777, "/tmp/replace_kernel");
 package_extract_file("run.sh", "/tmp/run.sh");
 set_perm(0, 0, 0777, "/tmp/run.sh");
 package_extract_file("zImage", "/tmp/zImage");
+set_perm(0, 0, 0777, "/tmp/zImage");
 show_progress(0.500000, 0);
 
 ui_print("Replacing kernel");
