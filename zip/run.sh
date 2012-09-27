@@ -7,7 +7,7 @@ do
 	ln -s busybox /tmp/$i
 done
 
-./dump_image boot boot.img
+./dump_image boot old.img
 eval $(grep -m 1 -A 1 BOOT_IMAGE_OFFSETS old.img | tail -n 1)
 ./replace_kernel old.img $boot_offset $boot_len $recovery_len zImage new.img
 if [ "$?" -eq '0' ]; then
