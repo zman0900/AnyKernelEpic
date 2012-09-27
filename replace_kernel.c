@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
 	} else {
 		kBlocks = kSize / 512 + 1;
 	}
-	printf("old kernel: %d blocks\nnew kernel: %d blocks", boot_offset - 1,
+	printf("old kernel: %d blocks\nnew kernel: %d blocks\n", boot_offset - 1,
 	       kBlocks);
 
 	// Skip old kernel and header
@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
 	// Write header
 	fseek(out, -512, SEEK_END);
 	fprintf(out, "\n\nBOOT_IMAGE_OFFSETS\n");
-	fprintf(out, "boot_offset=%d;boot_len=%d;", kBlocks, boot_len);
+	fprintf(out, "boot_offset=%d;boot_len=%d;", kBlocks + 1, boot_len);
 	fprintf(out, "recovery_offset=%d;recovery_len=%d;", kBlocks + 1 + boot_len,
 	        recov_len);
 	fprintf(out, "\n\n");
@@ -86,6 +86,6 @@ int main(int argc, char *argv[]) {
 	// Done
 	fclose(in);
 	fclose(out);
-	printf("success\n");
+	printf("%s built successfully\n", argv[6]);
 	return 0;
 }

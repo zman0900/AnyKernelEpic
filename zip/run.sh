@@ -6,7 +6,6 @@ cd /tmp
 rm -rf /sdcard/kernel_update.log
 # everything is logged into /sdcard/bml_over_mtd.log
 exec >> /sdcard/kernel_update.log 2>&1
-set -x
 
 export PATH=/tmp:/:/sbin:/system/xbin:/system/bin:$PATH
 
@@ -15,6 +14,9 @@ for i in $(busybox --list)
 do
 	ln -s busybox /tmp/$i
 done
+
+# log commands
+set -x
 
 bml_over_mtd dump boot 72 reservoir 4012 old.img
 eval $(busybox grep -m 1 -A 1 BOOT_IMAGE_OFFSETS old.img | busybox tail -n 1)
