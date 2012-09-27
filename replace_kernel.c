@@ -3,7 +3,8 @@
 
 int main(int argc, char *argv[]) {
 	if (argc != 7) {
-		printf("usage: %s old_bootimg boot_offset boot_len recovery_len new_kernel new_bootimg\n", argv[0]);
+		printf("usage: %s old_bootimg boot_offset boot_len recovery_len new_kernel new_bootimg\n",
+		       argv[0]);
 	exit(1);
 	}
 	int boot_offset = atoi(argv[2]);
@@ -38,6 +39,8 @@ int main(int argc, char *argv[]) {
 	} else {
 		kBlocks = kSize / 512 + 1;
 	}
+	printf("old kernel: %d blocks\nnew kernel: %d blocks", boot_offset - 1,
+	       kBlocks);
 
 	// Skip old kernel and header
 	fseek(in, 512 * boot_offset, SEEK_SET);
@@ -58,8 +61,9 @@ int main(int argc, char *argv[]) {
 	// Write header
 	fseek(out, -512, SEEK_END);
 	fprintf(out, "\n\nBOOT_IMAGE_OFFSETS\n");
-	fprintf(out, "boot_offset=%d;boot_len=%d;", boot_offset, boot_len);
-	fprintf(out, "recovery_offset=%d;recovery_len=%d;", boot_offset + boot_len, recov_len);
+	fprintf(out, "boot_offset=%d;boot_len=%d;", kBlocks, boot_len);
+	fprintf(out, "recovery_offset=%d;recovery_len=%d;", kBlocks + 1 + boot_len,
+	        recov_len);
 	fprintf(out, "\n\n");
 	fseek(out, 0, SEEK_END);
 	
